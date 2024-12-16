@@ -363,5 +363,5 @@ document.getElementById("offer").addEventListener("click", function() {
 // Add a click event listener to the element with ID "history"
 document.getElementById("support").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "support.html";
+    window.location.href = "support";
 });
