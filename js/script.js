@@ -308,6 +308,65 @@ document.getElementById("offer").addEventListener("click", function() {
     window.location.href = "offer.html";
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to render the product images and display subtitles on hover
+function showProducts(productData) {
+    productContainer.innerHTML = ''; // Clear existing products
+
+    for (const productId in productData) {
+        const product = productData[productId];
+        const productImage = product.image;  // Assuming the image URL is stored under 'image'
+        const subtitle = product.subtitle;   // Get subtitle value
+        const info = product.info;           // Get info value (we will send this later)
+
+        // Create product container
+        const productElement = document.createElement('div');
+        productElement.classList.add('product-item');
+
+        // Create image element
+        const imageElement = document.createElement('img');
+        imageElement.src = productImage;
+        imageElement.alt = subtitle;  // Use subtitle as alt text
+        imageElement.classList.add('product-image');
+
+        // Create subtitle text element (Initially hidden)
+        const subtitleElement = document.createElement('p');
+        subtitleElement.textContent = subtitle;  // Show subtitle under image
+        subtitleElement.classList.add('product-subtitle');
+        
+        // Append image and subtitle to product container
+        productElement.appendChild(imageElement);
+        productElement.appendChild(subtitleElement);
+
+        // Add click event to send 'info' value when image or subtitle is clicked
+        productElement.addEventListener('click', () => {
+            console.log('Selected info:', info);
+            // You can handle the info submission logic here
+        });
+
+        // Append the product to the product container
+        productContainer.appendChild(productElement);
+    }
+}
+
+
 // Add a click event listener to the element with ID "history"
 document.getElementById("support").addEventListener("click", function() {
     // Navigate to the "history.html" page
