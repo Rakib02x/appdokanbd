@@ -185,14 +185,14 @@ async function showProducts(tags) {
                 Object.keys(products).forEach(variant => {
                     const product = products[variant];
                     const image1 = product.images ? product.images.image1 : ''; // Only get image1
-                    const subtitle = product.subtitle || product.info; // Handle renaming from info to subtitle
+                    const subtitle = product.subtitle || ''; // Handle subtitle only
 
                     productDataStore.push({
                         title: product.title,
                         price: product.price,
                         stoke: product.stoke,
                         images: image1,
-                        subtitle: subtitle // Rename info to subtitle
+                        subtitle: subtitle // Store subtitle only
                     });
 
                     renderProduct(product.title, product.price, product.stoke, image1, subtitle, productDataStore.length - 1);
@@ -232,10 +232,9 @@ window.openDetailsPage = function (position) {
 };
 
 // Initialize the menu and product list on page load
-        getProductTags();
-    
-    
-    // Sidebar toggle functionality
+getProductTags();
+
+// Sidebar toggle functionality
 const menuIcon = document.getElementById('menu-icon'); // Menu icon in the title bar
 const sidebar = document.getElementById('sidebar'); // Sidebar element
 const closeSidebar = document.getElementById('close-sidebar'); // Close button in the sidebar
@@ -249,121 +248,40 @@ menuIcon.addEventListener('click', () => {
 closeSidebar.addEventListener('click', () => {
     sidebar.classList.remove('active'); // Remove 'active' class to slide the sidebar out
 });
-    
-    
-    
-    
-    
-    
-    
-    document.addEventListener("DOMContentLoaded", () => {
-  const toggleSearchBtn = document.getElementById("toggle-search");
-  const searchBar = document.getElementById("search-bar");
-  const closeBtn = document.getElementById("close-btn");
-  const searchInput = document.getElementById("search-input");
-  const searchButton = document.getElementById("search-button");
-  const suggestionsList = document.getElementById("suggestions-list");
 
-  // Product titles will be dynamically filled
-  let productTitles = [];
+// Search bar and history navigation functionality
+document.addEventListener("DOMContentLoaded", () => {
+    const toggleSearchBtn = document.getElementById("toggle-search");
+    const searchBar = document.getElementById("search-bar");
+    const closeBtn = document.getElementById("close-btn");
+    const searchInput = document.getElementById("search-input");
+    const searchButton = document.getElementById("search-button");
+    const suggestionsList = document.getElementById("suggestions-list");
 
-  // Fetch product titles from Firebase
-  async function fetchProductTitles() {
-    const dbRef = ref(database);
-    try {
-      const snapshot = await get(child(dbRef, `product`));
-      if (snapshot.exists()) {
-        const productData = snapshot.val();
-        Object.keys(productData).forEach((tag) => {
-          const products = productData[tag];
-          Object.keys(products).forEach((variant) => {
-            productTitles.push(products[variant].title);
-          });
-        });
-      } else {
-        console.log("No product data available");
-      }
-    } catch (error) {
-      console.error("Error fetching product titles: ", error);
+    // Fetch product titles from Firebase for suggestions
+    async function fetchProductTitles() {
+        const dbRef = ref(database);
+        try {
+            const snapshot = await get(child(dbRef, `product`));
+            if (snapshot.exists()) {
+                const productData = snapshot.val();
+                Object.keys(productData).forEach((tag) => {
+                    const products = productData[tag];
+                    Object.keys(products).forEach((variant) => {
+                        productTitles.push(products[variant].title);
+                    });
+                });
+            } else {
+                console.log("No product data available");
+            }
+        } catch (error) {
+            console.error("Error fetching product titles: ", error);
+        }
     }
-  }
 
-  // Populate suggestions list
-  function populateSuggestions(query = "") {
-    suggestionsList.innerHTML = "";
-
-    // Filter suggestions based on the query
-    const filteredSuggestions = productTitles.filter((title) =>
-      title.toLowerCase().includes(query.toLowerCase())
-    );
-
-    // Display filtered suggestions
-    filteredSuggestions.forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
-      suggestionsList.appendChild(li);
-
-      // Add click functionality to fill the search input
-      li.addEventListener("click", () => {
-        searchInput.value = item;
-        suggestionsList.innerHTML = ""; // Clear suggestions on selection
-        filterProducts(item); // Show matching products
-      });
-    });
-  }
-
-  // Filter and display matching products
-  function filterProducts(query) {
-    productContainer.innerHTML = ""; // Clear the product list
-
-    // Fetch and display matching products
-    productDataStore.forEach((product, index) => {
-      if (product.title.toLowerCase().includes(query.toLowerCase())) {
-        renderProduct(
-          product.title,
-          product.price,
-          product.stoke,
-          product.images[0],
-          product.info,
-          index
-        );
-      }
-    });
-  }
-
-  // Toggle search bar visibility
-  toggleSearchBtn.addEventListener("click", () => {
-    if (searchBar.classList.contains("hidden")) {
-      searchBar.classList.remove("hidden");
-      toggleSearchBtn.textContent = "close"; // Cross icon
-      populateSuggestions(); // Populate suggestions when search opens
-    } else {
-      searchBar.classList.add("hidden");
-      toggleSearchBtn.textContent = "search"; // Search icon
-    }
-  });
-
-  // Close search bar functionality
-  closeBtn.addEventListener("click", () => {
-    searchBar.classList.add("hidden");
-    toggleSearchBtn.textContent = "search"; // Reset to search icon
-  });
-
-  // Dynamic suggestions on input
-  searchInput.addEventListener("input", (e) => {
-    const query = e.target.value;
-    populateSuggestions(query); // Update suggestions based on input
-  });
-
-  // Search button functionality
-  searchButton.addEventListener("click", () => {
-    const query = searchInput.value;
-    filterProducts(query); // Filter products based on the query
-  });
-
-  // Initialize by fetching product titles
-  fetchProductTitles();
+    fetchProductTitles();
 });
+
 
 
 // Add a click event listener to the element with ID "history"
