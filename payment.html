@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Dokan</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/footer.css">
+   
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    
+    <div class="title-bar">
+    <i class="material-icons menu-icon" id="back-icon">arrow_back</i>
+    <img src="img/logo.png" alt="Shop Logo" class="logo" id="logo-click">
+    <i id="help" class="material-icons help-icon">support_agent</i>
+  </div>
+    
+    <p class="hadder-text">Payment process...</p>
+    <div class="container">
+        <div class="product" id="product-container">
+            <img id="product-image" src="img/img.png" alt="Product Image">
+            <div>
+                <strong id="product-title">Product Title</strong><br>
+                <span id="price">Price: </span>
+            </div>
+        </div>
+        
+        <div class="black-line"></div>
+        
+        <div class="payment-methods" id="payment-methods-container">
+            <div class="payment-method-padding">
+                <div class="method" onclick="selectMethod(this, 1)">
+                    <img src="img/bkash.png" alt="Bkash">
+                </div>
+                <div class="method" onclick="selectMethod(this, 2)">
+                    <img src="img/nagad.png" alt="Nagad">
+                </div>
+                <div class="method" onclick="selectMethod(this, 3)">
+                    <img src="img/upay.png" alt="Upay">
+                </div>
+                <div class="method" onclick="selectMethod(this, 4)">
+                    <img src="img/rocket.png" alt="Rocket">
+                </div>
+            </div>
+        </div>
+
+        <div class="details-container" id="details-container" style="display: none;">
+            <div class="payment-details-padding">
+                <h2>Send Money only</h2>
+                <p><b>Method:</b> <span id="method"></span></p>
+                <p><b>Number:</b> <span id="number"></span></p>
+                <p><b>Amount:</b> <span id="amount"></span></p>
+                <p><b>Reference:</b> <span id="reference"></span></p>
+                <div class="input-container">
+                    <input type="text" id="transaction-id" placeholder="Transaction ID" required>
+                    <input type="email" id="email" placeholder="Delevery Email Address" required>
+                    <button id="submit-button">Pay Now</button>
+                    <div id="loading" class="loading" style="display: none;">Submitting...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-details-padding">
+            <div id="ticket-message" class="ticket-message" style="display: none;"></div>
+            <button id="copy-button" class="copy-button" style="display: none;">Copy</button>
+            <a href="https://wa.me/+60175045700" class="live-chat-button" style="display: none;">Live Chat</a>
+        </div>
+
+        <div class="order-complete" id="order-complete" style="display: none;">
+            <div class="img-div"> 
+                <img src="img/checkmark.png" alt="Order Complete" class="complete-icon">
+            </div>
+            <h2 style="width: 100%; text-align: center;">Order complete</h2>
+            <p class="details-title">Details</p>
+            <p><strong>Order:</strong> <span id="order-title"></span></p>
+            <p><strong>Order Email:</strong> <span id="order-email"></span></p>
+            <p><strong>Date Time:</strong> <span id="date-time"></span></p>
+            <p><strong>Method:</strong> <span id="payment-method"></span></p>
+            <p><strong>Paid Amount:</strong> <span id="paid-amount"></span></p>
+            <p><strong>Status:</strong> <span>Pending</span></p>
+            <p><strong>Ticket Number:</strong> <span id="ticket-number"></span></p>
+            <a href="https://wa.me/+60175045700" class="live-chat-button">Live Chat</a>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+        import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "app-dokan.firebaseapp.com",
+            databaseURL: "https://app-dokan-default-rtdb.firebaseio.com",
+            projectId: "app-dokan",
+            storageBucket: "app-dokan.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const title = urlParams.get('title');
+            const price = urlParams.get('price');
+            const image = urlParams.get('image');
+            if (title && price && image) {
+                document.getElementById('product-title').innerText = title;
+                document.getElementById('price').innerText = `Price: ${price}`;
+                document.getElementById('product-image').src = image;
+            }
+        }
+
+        let selectedIndex = 1;
+        window.selectMethod = async function (element, index) {
+            selectedIndex = index;
+            const methods = document.querySelectorAll('.method');
+            methods.forEach(method => method.classList.remove('selected'));
+            element.classList.add('selected');
+            document.getElementById('payment-methods-container').style.display = 'none';
+            await fetchPaymentDetails(index);
+        };
+
+        async function fetchPaymentDetails(methodIndex) {
+            try {
+                const dbRef = ref(db, `payment/${methodIndex}`);
+                const snapshot = await get(dbRef);
+                if (snapshot.exists()) {
+                    const paymentDetails = snapshot.val();
+                    document.getElementById('method').innerText = paymentDetails.method;
+                    document.getElementById('number').innerText = paymentDetails.number;
+                    document.getElementById('amount').innerText = document.getElementById('price').innerText.split(": ")[1];
+                    document.getElementById('reference').innerText = paymentDetails.reference;
+                    document.getElementById('details-container').style.display = 'block';
+                } else {
+                    console.error("No data available for payment/" + methodIndex);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        }
+
+        async function submitForm() {
+    const transactionId = document.getElementById('transaction-id').value;
+    const email = document.getElementById('email').value;
+
+    if (transactionId.trim() === "" || email.trim() === "") {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const loading = document.getElementById('loading');
+    loading.style.display = 'block';
+    document.getElementById('submit-button').disabled = true;
+
+    try {
+        const ordersRef = ref(db, 'order');
+        const snapshot = await get(ordersRef);
+        const orderLength = snapshot.exists() ? Object.keys(snapshot.val()).length : 0;
+        const newOrderKey = orderLength + 1;
+
+        const orderData = {
+            transaction_id: transactionId,
+            email: email,
+            order_title: document.getElementById('product-title').innerText,
+            order_email: email,
+            date_time: new Date().toLocaleString(),
+            payment_method: document.getElementById('method').innerText,
+            paid_amount: document.getElementById('amount').innerText,
+            ticket_number: newOrderKey,
+            status: "Pending",
+            delivery: "Order is waiting for approval" // Adding delivery tag
+        };
+
+        await set(ref(db, `order/${newOrderKey}`), orderData);
+
+        document.getElementById('product-container').style.display = 'none';
+        document.getElementById('order-title').innerText = orderData.order_title;
+        document.getElementById('order-email').innerText = orderData.order_email;
+        document.getElementById('date-time').innerText = orderData.date_time;
+        document.getElementById('payment-method').innerText = orderData.payment_method;
+        document.getElementById('paid-amount').innerText = orderData.paid_amount;
+        document.getElementById('ticket-number').innerText = orderData.ticket_number;
+
+        document.getElementById('details-container').style.display = 'none';
+        document.getElementById('ticket-message').style.display = 'none';
+        document.getElementById('copy-button').style.display = 'none';
+        document.getElementById('order-complete').style.display = 'block';
+    } catch (error) {
+        console.error("Error submitting data:", error);
+        alert("There was an error submitting your data. Please try again.");
+    } finally {
+        loading.style.display = 'none';
+        document.getElementById('submit-button').disabled = false;
+    }
+}
+
+        document.getElementById('copy-button').addEventListener('click', function() {
+            const ticketNumber = this.getAttribute('data-ticket-number');
+            navigator.clipboard.writeText(ticketNumber)
+                .then(() => alert('Ticket number copied to clipboard!'))
+                .catch(err => console.error('Error copying text: ', err));
+        });
+
+        document.getElementById('submit-button').addEventListener('click', submitForm);
+    
+    
+    
+    
+    
+    </script>
+    <script type="module" src="js/click.js"></script>
+</body>
+
+<footer>
+    <div class="footerContainer">
+        
+        <img class="footer-img" src="img/logo_white.png" alt="Shop Logo"> 
+        
+        <div class="socialIcons">
+            <a href="https://www.facebook.com/Rakib02X"><i class="fa-brands fa-facebook"></i></a>                             
+            <a href="https://youtube.com/@ryproductionbd?si=lCoBL5sPIGNLzAOp"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://t.me/Rakib02x"><i class="fa-brands fa-telegram"></i></a>
+            <a href="http://wa.me/+60175045com@"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <div class="footerNav">
+            <ul><li><a href="">About</a></li>             
+                <li><a href="">Contact</a></li>
+                <li><a href="">Privacy</a></li>
+                
+            </ul>
+        </div>
+        
+    </div>
+    <div class="footerBottom">
+        <p>Copyright &copy;2025; Designed by <span class="designer">Rakib</span></p>
+    </div>
+</footer>
+
+
+</html>

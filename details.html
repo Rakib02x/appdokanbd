@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Responsive Product Page</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header img {
+            height: 30px;
+        }
+
+        .header .menu-icon, .header .search-icon {
+            font-size: 20px;
+            cursor: pointer;
+            color: green;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .product-image {
+            border-radius: 10px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .product-gallery img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .product-details .text {
+            max-width: 75%;
+        }
+
+        .product-details h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+        }
+
+        .product-details .icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .product-details .icons .icon-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            background-color: green;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-details .icons .icon-wrapper:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-details .icons .icon-wrapper .material-icons {
+            font-size: 22px;
+        }
+
+        .buy-now-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .details-section {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-section h2 {
+            margin: 0 0 10px;
+            font-size: 18px;
+        }
+
+        .details-section p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-bar">
+        <i class="material-icons menu-icon" id="back-icon">arrow_back</i>
+        <img src="img/logo.png" alt="Shop Logo" class="logo" id="logo-click">
+        <i id="help" class="material-icons help-icon">support_agent</i>
+      </div>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="product-image" id="product-image">
+                <!-- Main product image will appear here -->
+            </div>
+            <div class="product-gallery" id="product-gallery">
+                <!-- Thumbnails will appear here -->
+            </div>
+            <div class="product-details">
+                <div class="text">
+                    <h1 id="product-title">Product Title</h1>
+                    <p id="product-price">Price: 00.00 Tk</p>
+                </div>
+                <div class="icons">
+                    <div class="icon-wrapper" id="share-icon">
+                        <span class="material-icons">share</span>
+                    </div>
+                    <div class="icon-wrapper" id="copy-icon">
+                        <span class="material-icons">content_copy</span>
+                    </div>
+                </div>
+            </div>
+            <button class="buy-now-btn" id="buy-now-btn">Buy Now</button>
+        </div>
+        <div class="side-content">
+            <div class="details-section">
+                <h2>Details</h2>
+                <p id="product-info">Product information goes here...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const title = urlParams.get('title');
+        const price = urlParams.get('price');
+        const info = urlParams.get('info');
+        const images = JSON.parse(urlParams.get('images'));
+
+        // Set main product image
+        const productImageDiv = document.getElementById('product-image');
+        const mainImage = document.createElement('img');
+        mainImage.src = images[0];
+        mainImage.alt = title;
+        productImageDiv.appendChild(mainImage);
+
+        // Populate product gallery
+        const productGalleryDiv = document.getElementById('product-gallery');
+        images.forEach((image) => {
+            const thumbnail = document.createElement('img');
+            thumbnail.src = image;
+            thumbnail.alt = title;
+            thumbnail.addEventListener('click', () => {
+                mainImage.src = image; // Update main product image on click
+            });
+            productGalleryDiv.appendChild(thumbnail);
+        });
+
+        // Populate product details
+        document.getElementById('product-title').innerText = title;
+        document.getElementById('product-price').innerText = `Price: ${price} Tk`;
+        document.getElementById('product-info').innerHTML = info;
+
+        // Handle Buy Now button click
+        document.getElementById('buy-now-btn').addEventListener('click', () => {
+            const url = `payment.html?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&image=${encodeURIComponent(images[0])}`;
+            window.location.href = url;
+        });
+
+        // Handle Share button click
+        document.getElementById('share-icon').addEventListener('click', () => {
+            const currentUrl = `${window.location.origin}${window.location.pathname}?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&info=${encodeURIComponent(info)}&images=${encodeURIComponent(JSON.stringify(images))}`;
+            navigator.share
+                ? navigator.share({
+                      title: 'Check out this product!',
+                      text: `Check out ${title} for ${price} Tk.`,
+                      url: currentUrl,
+                  })
+                : alert('Sharing is not supported.');
+        });
+
+        // Handle Copy Link button click
+        document.getElementById('copy-icon').addEventListener('click', () => {
+            const currentUrl = `${window.location.origin}${window.location.pathname}?title=${encodeURIComponent(title)}&price=${encodeURIComponent(price)}&info=${encodeURIComponent(info)}&images=${encodeURIComponent(JSON.stringify(images))}`;
+            navigator.clipboard.writeText(currentUrl).then(() => {
+                alert('Link copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy the link.');
+            });
+        });
+
+
+        
+    </script>
+    <script type="module" src="js/click.js"></script>
+
+</body>
+</html>

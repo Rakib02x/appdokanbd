@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/footer.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, initial-scale=1.0, maximum-scale=1.0">
+  <title>Order Page</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: Arial, sans-serif;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+      background-color: #f5f5f5;
+    }
+    
+    .search-container {
+      padding: 20px;
+      text-align: center;
+      height: auto;
+    }
+    .search-container input {
+      width: calc(100% - 40px); /* Avoid extra width */
+      max-width: 500px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 25px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .search-container button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .order-card {
+      background-color: white;
+      margin: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e0e0e0;
+    }
+    .order-card h2 {
+      font-size: 16px;
+      margin: 0;
+    }
+    .order-card p {
+      margin: 5px 0;
+    }
+    .order-card hr {
+      border: none;
+      border-top: 1px solid black;
+      margin: 10px 0;
+    }
+    .order-card .delivery {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    /* Title bar styling */
+    .title-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      width: 100%;
+      background-color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 2px -2px #ddd;
+    }
+
+    .title-bar .menu-icon {
+      font-size: 35px;
+      color: #4CAF50;
+      position: absolute;
+      left: 5px;
+      cursor: pointer;
+    }
+
+    .title-bar .logo {
+      width: 150px;
+    }
+
+    .title-bar .help-icon {
+      font-size: 35px;
+      color: #4CAF50;
+      position: absolute;
+      right: 5px;
+      cursor: pointer;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .search-container input {
+        width: calc(100% - 40px);
+      }
+      .title-bar .logo {
+        width: 150px;
+      }
+      .order-card {
+        margin: 10px;
+      }
+    }
+  
+ .contarnar {
+   height:auto;
+ }
+  </style>
+</head>
+<body>
+
+  <div class="title-bar">
+    <i class="material-icons menu-icon" id="back-icon">arrow_back</i>
+    <img src="img/logo.png" alt="Shop Logo" class="logo" id="logo-click">
+    <i id="help" class="material-icons help-icon">support_agent</i>
+  </div>
+
+  <div class="search-container">
+    <input id="search-input" type="text" placeholder="Email or Transaction ID">
+    <button id="search-button">Search</button>
+  </div>
+
+  <div id="progress-bar" style="display: none; height: 5px; background-color: blue; width: 0%;"></div>
+
+  <div id="orders-container" class="contarnar">
+    
+    
+  </div>
+
+
+
+
+
+  <script type="module">
+    // Firebase SDK Import
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "app-dokan.firebaseapp.com",
+      databaseURL: "https://app-dokan-default-rtdb.firebaseio.com",
+      projectId: "app-dokan",
+      storageBucket: "app-dokan.appspot.com",
+      messagingSenderId: "388747703289",
+      appId: "1:388747703289:web:162085a1c25790bd954328",
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
+
+    // DOM Elements
+    const searchButton = document.getElementById("search-button");
+    const searchInput = document.getElementById("search-input");
+    const progressBar = document.getElementById("progress-bar");
+    const ordersContainer = document.getElementById("orders-container");
+
+    // Function to create order card dynamically
+    function createOrderCard(order) {
+      const orderCard = document.createElement("div");
+      orderCard.className = "order-card";
+      orderCard.style.border = "1px solid #ddd";
+      orderCard.style.margin = "10px";
+      orderCard.style.padding = "10px";
+
+      orderCard.innerHTML = `
+        <h2>Ticket number: ${order.ticket_number || "N/A"}</h2>
+        <hr>
+        <p>Product: ${order.order_title || "N/A"}</p>
+        <p>Price: ${order.paid_amount || "0"} Tk</p>
+        <p>Date: ${order.date_time || "N/A"}</p>
+        <p>Delivery: ${order.delivery || "N/A"}</p>
+      `;
+
+      return orderCard;
+    }
+
+    // Search Button Click Event
+    searchButton.addEventListener("click", async () => {
+      const searchValue = searchInput.value.trim();
+
+      if (!searchValue) {
+        alert("Email or transaction ID");
+        return;
+      }
+
+      // Clear previous results
+      ordersContainer.innerHTML = "";
+
+      // Show progress bar
+      progressBar.style.display = "block";
+      progressBar.style.width = "0%";
+
+      let progress = 0;
+      const progressInterval = setInterval(() => {
+        if (progress < 100) {
+          progress += 10;
+          progressBar.style.width = progress + "%";
+        }
+      }, 100);
+
+      try {
+        const snapshot = await get(child(ref(database), "order"));
+        clearInterval(progressInterval);
+        progressBar.style.width = "100%";
+
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          let results = Object.values(data).filter(
+            (order) =>
+              order.email === searchValue || order.transaction_id === searchValue
+          );
+
+          // Reverse the results to show the latest first
+          results.reverse();
+
+          if (results.length > 0) {
+            results.forEach((order) => {
+              const orderCard = createOrderCard(order);
+              ordersContainer.appendChild(orderCard);
+            });
+          } else {
+            alert("No matching orders found");
+          }
+        } else {
+          alert("No data available in Firebase");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        alert("Failed to fetch data. Try again later.");
+      } finally {
+        clearInterval(progressInterval);
+        progressBar.style.display = "none";
+      }
+    });
+  
+  // Add a click event listener to the element with ID "back"
+document.getElementById("back-icon").addEventListener("click", function() {
+    // Go back in history
+    history.back();
+});
+  
+  // help icon click"
+document.getElementById("help").addEventListener("click", function() {
+    // Navigate to the "history.html" page
+    window.location.href = "support.html";
+});
+  
+  // logo icon click"
+document.getElementById("logo-click").addEventListener("click", function() {
+    // Navigate to the "history.html" page
+    window.location.href = "index.html";
+});
+  
+  
+  </script>
+
+</body>
+  
+  
+  
+  
+  
+</html>

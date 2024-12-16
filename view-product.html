@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Dokan</title>
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/title.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .left-section {
+            flex: 1 1 60%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .right-section {
+            flex: 1 1 35%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            border-radius: 10px;
+            height: 350px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .product-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .product-gallery img {
+            width: 65px;
+            height: 65px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-gallery img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .product-details .text {
+            max-width: 75%;
+        }
+
+        .product-details h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .product-details p {
+            margin: 5px 0;
+        }
+
+        .product-details .icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .product-details .icons .icon-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            background-color: green;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-details .icons .icon-wrapper:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .product-details .icons .icon-wrapper .material-icons {
+            font-size: 22px;
+        }
+
+        .buy-now-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .details-section h2 {
+            margin: 0 0 10px;
+            font-size: 22px;
+        }
+
+        .details-section p {
+            margin: 10px 0;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-section, .right-section {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="title-bar">
+    <i class="material-icons menu-icon" id="back-icon">arrow_back</i>
+    <img src="img/logo.png" alt="Shop Logo" class="logo" id="logo-click">
+    <i id="help" class="material-icons help-icon">support_agent</i>
+  </div>
+    
+    
+
+<div class="container">
+    <div class="left-section">
+        <div class="product-image" id="product-image"></div>
+        <div class="product-gallery" id="product-gallery"></div>
+        <div class="product-details">
+            <div class="text">
+                <h1 id="product-title">Product Title</h1>
+                <p id="product-price">Price: 00.00 Tk</p>
+            </div>
+            <div class="icons">
+                <div class="icon-wrapper" id="share-icon"><span class="material-icons">share</span></div>
+                <div class="icon-wrapper" id="copy-icon"><span class="material-icons">content_copy</span></div>
+            </div>
+        </div>
+        <button class="buy-now-btn" id="buy-now-btn">Buy Now</button>
+    </div>
+    <div class="right-section">
+        <h4>Details</h4>
+        <p id="product-info">Product information goes here...</p>
+    </div>
+</div>
+<script type="module" src="js/click.js"></script>
+<script type="module" src="js/view-product.js"></script>
+
+</body>
+<footer>
+    <div class="footerContainer">
+        <img class="footer-img" src="img/logo_white.png" alt="Shop Logo"> 
+        <div class="socialIcons">
+            <a href="https://www.facebook.com/Rakib02X"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://youtube.com/@ryproductionbd?si=lCoBL5sPIGNLzAOp"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://t.me/Rakib02x"><i class="fa-brands fa-telegram"></i></a>
+            <a href="http://wa.me/+60175045com@"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+        <div class="footerNav">
+            <ul>
+                <li><a href="">About</a></li>             
+                <li><a href="">Contact</a></li>
+                <li><a href="">Privacy</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footerBottom">
+        <p>Copyright &copy;2025; Designed by <span class="designer">Rakib</span></p>
+    </div>
+</footer>
+</html>
