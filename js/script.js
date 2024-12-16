@@ -339,7 +339,7 @@ getProductTags();
 // Add a click event listener to the element with ID "history"
 document.getElementById("history").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "history.html";
+    window.location.href = "/history";
 });
 
 // Add a click event listener to the element with ID "history"
@@ -351,17 +351,17 @@ document.getElementById("myorder").addEventListener("click", function() {
 // Add a click event listener to the element with ID "history"
 document.getElementById("home").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "index.html";
+    window.location.href = "/index";
 });
 
 // Add a click event listener to the element with ID "history"
 document.getElementById("offer").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "offer.html";
+    window.location.href = "/offer";
 });
 
 // Add a click event listener to the element with ID "history"
 document.getElementById("support").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "support";
+    window.location.href = "/support";
 });
