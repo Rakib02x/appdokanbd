@@ -1,0 +1,552 @@
+/* Reset some default margins */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 0;
+    height: auto; /* Auto height for body */
+}
+
+/* Main container for the website */
+.container {
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin: auto;
+    max-width: 1200px;
+    height: auto; /* Auto height for container */
+}
+
+/* For desktop view, set 70% width */
+@media (min-width: 768px) {
+    .container {
+        width: 95%;
+        margin: auto;
+    }
+}
+
+/* Title bar */
+/* Title bar styling */
+.title-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    box-shadow: 0 4px 2px -2px #ddd;
+}
+
+.title-bar .menu-icon {
+    font-size: 35px;
+    color: #4CAF50;
+    position: absolute;
+    left: 20px;
+    cursor: pointer;
+}
+
+.title-bar .logo {
+    width: 150px;
+}
+
+.title-bar .search-icon {
+    font-size: 35px;
+    color: #4CAF50;
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+}
+
+/* search */
+
+
+
+
+/* Slider */
+.slider {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    border-radius: 10px;
+    margin-top: 80px;
+}
+
+.slider-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    white-space: nowrap;
+}
+
+.slider-container img {
+    width: 100%;
+    flex: 0 0 auto;
+    height: auto;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Navigation Dots */
+.slider-dots {
+    position: absolute; /* Position dots inside the slider */
+    bottom: 10px; /* Adjust spacing from the bottom of the slider */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10; /* Ensure dots appear above the image */
+}
+
+.slider-dots span {
+    width: 12px;
+    height: 12px;
+    background: rgba(255, 255, 255, 0.7); /* Transparent white */
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    border: 2px solid rgba(0, 0, 0, 0.2); /* Optional border for visibility */
+    transition: background 0.3s;
+}
+
+.slider-dots span.active {
+    background: rgba(255, 255, 255, 1); /* Solid white for the active dot */
+    border-color: rgba(0, 0, 0, 0.5); /* Optional border change */
+}
+
+/* Mobile: Single Image */
+@media (max-width: 768px) {
+    .slider-container img {
+        flex: 0 0 100%;
+    }
+}
+
+/* Desktop: Two Images */
+@media (min-width: 769px) {
+    .slider-container img {
+        flex: 0 0 50%;
+    }
+}
+
+/*-- Notification */
+/* Container for the notification bar */
+        .notification-bar {
+            background-color: #4CAF50;
+            display: flex;
+            align-items: center;
+            color: white;
+            width: ;
+            overflow: hidden;
+            padding: 4px 0;
+            position: absolute;
+            margin-top: 15px;
+            left: 0;
+            right: 0;
+            width: width: calc(100% + 40px); /* Makes it span the full viewport width */
+            margin-left: calc(-1 * padding_value); /* Adjust to cancel out the body padding */
+            margin-right: calc(-1 * padding_value); /* Adjust to cancel out the body padding */
+            
+        }
+
+        /* Container for the image */
+        .image-container {
+            flex-shrink: 0; /* Prevent image from shrinking */
+            padding-left: 15px; /* Space from the left edge */
+            padding-right: 10px; /* Add padding to ensure space between image and text */
+        }
+
+        /* Image styling (28x28) */
+        .image-container img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover; /* Ensures the image fits well inside the circle */
+        }
+
+        /* Scrolling text container */
+        .scrolling-text-container {
+            display: flex;
+            align-items: center; /* Vertically align text in the center */
+            width: calc(100% - 53px); /* Adjust width to accommodate the image width (28px) + padding */
+            overflow: hidden;
+            white-space: nowrap;
+            
+        }
+
+        /* Scrolling text */
+        .scrolling-text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: scroll-left 10s linear infinite;
+            animation-delay: 1s;
+            font-size: 13px;
+        }
+
+        /* Scrolling animation */
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%); /* Start just outside the container */
+            }
+            100% {
+                transform: translateX(-100%); /* Scroll all the way to the left */
+            }
+        }
+
+/* Selection Menu */
+
+
+/* Selection Menu */
+.menu {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(100px, 1fr)); /* Controls the number of columns (6 buttons per row) */
+    grid-auto-flow: column; /* Enables horizontal scrolling */
+    grid-template-rows: repeat(2, auto); /* Two rows */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    gap: 10px; /* Spacing between buttons */
+    margin-top: 64px;
+    margin-bottom: 10px;
+    white-space: nowrap; /* Prevent line breaks */
+}
+
+.menu button {
+    padding: 12px 0px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu button.selected {
+    background-color: #D19C1D;
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+    .menu {
+        padding: 5px 0;               /* Adjust padding for smaller screens */
+    }
+
+    .menu-button {
+        font-size: 14px;              /* Smaller font size for buttons */
+        padding: 8px 10px;            /* Adjust padding for smaller buttons */
+    }
+}
+
+.scroll-indicator {
+    position: absolute;              /* Positioning relative to the menu */
+    top: 50%;                       /* Center vertically */
+    transform: translateY(-50%);    /* Adjust for perfect centering */
+    z-index: 2;                     /* Ensure it's on top */
+}
+
+.left-arrow {
+    left: 10px;                     /* Position on the left */
+}
+
+.right-arrow {
+    right: 10px;                   /* Position on the right */
+}
+
+
+/* Products */
+/* Reset all elements to border-box for consistent sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Products container styling */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive column sizing */
+    gap: 15px; /* Space between each item */
+    padding: 0px; /* Padding for the entire grid */
+    width: 100%; /* Full width of parent */
+    background-color: transparent;
+}
+
+/* Individual product container */
+.product-container {
+    padding: 0;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden; /* Prevent any content overflow */
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ensures it takes full grid item height */
+}
+
+/* Product card styling */
+.product-card {
+    background-color: white;
+    text-align: left;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Product card image */
+.product-card img {
+    width: 100%;
+    border-radius: 10px; /* Smooth border for top corners */
+    object-fit: cover; /* Ensures image fits within bounds */
+}
+
+/* Title font size */
+.product-card h3 {
+    font-size: 14px; /* Adjust to your desired size */
+    margin-top: 10px;
+}
+
+/* Price and stock container */
+.price-stock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Price text */
+.price-text {
+    font-size: 14px;
+    color: #4CAF50;
+    font-weight: bold;
+    padding: 6px 10px 1px 10px;
+    border-radius: 10px;
+    margin: 0;
+    border: 1px solid #cae8cb;
+    
+    /* Ensure single line and handle overflow */
+    white-space: nowrap;       /* Prevents text from wrapping to a new line */
+    overflow: hidden;          /* Hides overflowed content */
+    text-overflow: ellipsis;   /* Adds "..." to indicate truncated text */
+}
+
+/* Stock text */
+.stoke-text {
+    font-size: 12px;
+    color: #888;
+    opacity: 0.6;
+    margin-left: 10px;
+}
+
+/* Buy Now Button */
+.product-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: -5px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 0 10px 10px;
+    text-align: center;
+}
+
+
+
+
+/* Responsive grid adjustments for larger screens */
+@media (min-width: 768px) {
+    .products {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+
+
+/* Media query for desktop view to auto-fill product columns */
+@media (min-width: 768px) {
+    .products {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+/* Loading animation */
+#loading {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots div {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 0 3px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    animation: bounce 0.8s infinite alternate;
+}
+
+.loading-dots div:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading-dots div:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    to {
+        opacity: 0.3;
+        transform: translateY(-10px);
+    }
+}
+
+
+
+
+/* Sidebar Styles */
+.sidebar {
+    font-family: Arial, sans-serif;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Initially hidden off-screen */
+    width: 250px;
+    height: 100%;
+    background-color: #f4f4f4; /* Light gray background */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    transition: left 0.3s ease-in-out; /* Smooth transition for slide-in */
+    z-index: 1000; /* Ensure it stays above other elements */
+}
+
+.sidebar.active {
+    left: 0; /* Slide-in effect */
+}
+
+.sidebar ul {
+    list-style: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.sidebar ul li {
+    padding: 15px; /* Add padding for better click area */
+    border-bottom: 1px solid #ddd; /* Add a separator line between items */
+    font-size: 18px; /* Adjust font size */
+    cursor: pointer; /* Indicate clickable items */
+}
+
+.sidebar ul li:hover {
+    background-color: #e2e2e2; /* Highlight item on hover */
+}
+
+.sidebar ul li a {
+    text-decoration: none; /* Remove underline from links */
+    color: #333; /* Dark gray text color */
+    display: block; /* Make entire item clickable */
+}
+
+.sidebar-close {
+    text-align: right; /* Align close button to the right */
+    padding: 10px; /* Add padding around the close button */
+    font-size: 20px; /* Larger font size for visibility */
+    cursor: pointer; /* Indicate clickable area */
+    color: #333; /* Dark gray color */
+}
+
+
+/* General reset */
+
+.titlebar h1 {
+  font-size: 24px;
+  color: #4CAF50;
+  margin: 0;
+}
+
+.search-icon {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.search-container {
+  position: fixed;
+  top: 60px; /* Adjust to your title bar height */
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(40px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+#search-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-left: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.suggestions {
+  width: 80%;
+  list-style: none;
+  margin: 15px 0;
+  padding: 0;
+  text-align: left;
+    font-size: 12px;
+}
+
+.suggestions li {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.close-button {
+  background-color: #ff4d4d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}

@@ -1,0 +1,46 @@
+/* Title bar styling */
+    .title-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      width: ;
+      background-color: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 2px -2px #ddd;
+    }
+
+    .title-bar .menu-icon {
+      font-size: 35px;
+      color: #4CAF50;
+      position: absolute;
+      left: 10px;
+      cursor: pointer;
+    }
+
+    .title-bar .logo {
+      width: 150px;
+    }
+
+    .title-bar .help-icon {
+      font-size: 35px;
+      color: #4CAF50;
+      position: absolute;
+      right: 10px;
+      cursor: pointer;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .search-container input {
+        width: calc(100% - 40px);
+      }
+      .title-bar .logo {
+        width: 150px;
+      }
+      .order-card {
+        margin: 10px;
+      }
+    }
