@@ -121,10 +121,10 @@ function renderProduct(title, price, stoke, image, subtitle, position) {
     productContainer.appendChild(productContainerDiv);
 }
 
-// Function to redirect to details.html with subtitle data
+// Function to redirect to view-product with subtitle data
 window.openDetailsPage = function(position) {
     const product = productDataStore[position];
-    const url = `view-product.html?subtitle=${encodeURIComponent(product.subtitle)}`;
+    const url = `/view-product/?subtitle=${encodeURIComponent(product.subtitle)}`;
     window.location.href = url;
 };
 
