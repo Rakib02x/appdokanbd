@@ -13,5 +13,5 @@ document.getElementById("help").addEventListener("click", function() {
     // logo icon click"
 document.getElementById("logo-click").addEventListener("click", function() {
     // Navigate to the "history.html" page
-    window.location.href = "index.html";
+    window.location.href = "/index";
 });
