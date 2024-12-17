@@ -7,7 +7,7 @@ document.getElementById("back-icon").addEventListener("click", function() {
     // Add a click event listener to the element with ID "back"
 document.getElementById("help").addEventListener("click", function() {
     // Go back in history
-    window.location.href = "support.html";
+    window.location.href = "/support";
 });
     
     // logo icon click"
