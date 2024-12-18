@@ -113,7 +113,7 @@ function goToPrevCard() {
 // Auto-Slide
 let autoSlideInterval;
 function startAutoSlide() {
-    autoSlideInterval = setInterval(goToNextCard, 2000);
+    autoSlideInterval = setInterval(goToNextCard, 3000);
 }
 
 function stopAutoSlide() {
