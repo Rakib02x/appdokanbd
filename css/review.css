@@ -1,0 +1,83 @@
+.section {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 20px;
+    color: #000;
+}
+
+        /* Slider Container */
+        .slider-container-review {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 440px;
+            perspective: 1500px;
+            overflow: hidden;
+            background-color: #transparent;
+            
+        }
+
+        /* Cards */
+        .card {
+            position: absolute;
+            width: 200px;
+            height: 300px;
+            border-radius: 15px;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            transform: translate(-50%, -50%) scale(0.9);
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+            opacity: 0.6;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background-size: cover;
+            background-position: center;
+            z-index: 1;
+            margin-top: -30px;
+        }
+
+        /* Center Card */
+        .card.active {
+            transform: translate(-50%, -50%) scale(1.1);
+            opacity: 1;
+            z-index: 10;
+        }
+
+        /* Left Card */
+        .card.prev {
+            transform: translate(-80%, -50%) rotateY(15deg) scale(0.9);
+            z-index: 5;
+        }
+
+        /* Right Card */
+        .card.next {
+            transform: translate(-20%, -50%) rotateY(-15deg) scale(0.9);
+            z-index: 5;
+        }
+
+        /* Navigation Buttons */
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background-color: #E5E4E2;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: #08a437;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #E5E4E2;
+        }
