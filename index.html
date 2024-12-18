@@ -7,6 +7,7 @@
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/review.css">
     <!-- Link to Google Fonts for Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -86,21 +87,60 @@
         </div>
 
         <!-- Products Section -->
+        
+        
         <div class="products">
             <!-- Products will be loaded here dynamically from Firebase -->
         </div>
     </div>
+    
+    <!-- Customar Review -->
+    
+    <p class="section">Customar Review</p>
+    
+    <div class="slider-container-review" id="sliderContainer">
+    <!-- Dynamic Cards will be injected here -->
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn">&#10094;</button>
+        <button class="nav-btn" id="nextBtn">&#10095;</button>
+    </div>
+</div>
+    
+    
+    <!-- FAQ question answers -->
+    
+    <div class="faq-container">
+        <div class="faq-header">Frequently Asked Questions</div>
+
+        <div class="faq-item">
+            <div class="faq-question">What is your digital product about?</div>
+            <div class="faq-answer">Our product offers powerful tools to enhance productivity, including innovative features that simplify workflows.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">How do I purchase the product?</div>
+            <div class="faq-answer">Simply visit our website, click "Buy Now," and follow the secure checkout process to make a purchase.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Do you offer customer support?</div>
+            <div class="faq-answer">Yes! Our dedicated support team is available 24/7 to assist you with any questions or issues.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">Can I get a refund if I'm not satisfied?</div>
+            <div class="faq-answer">Absolutely! after you receive the product, if it’s not working you get instent replesement from our support team. or can get refund using discussion.</div>
+        </div>
+    </div>
+    
 
     <!-- Firebase Script -->
-    <script type="module" src="js/script.js">
-        
+    <script type="module" src="js/script.js"> </script>
+    <script type="module" src="js/review.js"> </script>
     
     
     
     
-    
-    
-    </script>
 </body>
 
 <footer>
