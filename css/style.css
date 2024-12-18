@@ -550,3 +550,74 @@ body, html {
   border-radius: 5px;
   cursor: pointer;
 }
+
+
+
+/* FAQ Container */
+        .faq-container {
+            max-width: 900px;
+            margin-bottom: -15px;
+            padding: 30px;
+            background-color: transparent;
+            border-radius: 0px;
+            box-shadow: 20px 0px 0px 0px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .faq-header {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #08a437;
+            font-weight: 700;
+        }
+
+        /* FAQ Item */
+        .faq-item {
+            border-bottom: 1px solid #ddd;
+            padding: 15px 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #08a437;
+        }
+
+        .faq-question::after {
+            content: '\002B'; /* Plus Sign */
+            font-size: 1.3em;
+            color: #08a437;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.open .faq-question::after {
+            transform: rotate(45deg); /* Rotate for Minus Sign */
+        }
+
+        .faq-answer {
+            display: none;
+            margin-top: 10px;
+            line-height: 1.6;
+            color: #555;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .faq-item.open .faq-answer {
+            display: block;
+            opacity: 1;
+        }
