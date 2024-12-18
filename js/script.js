@@ -365,3 +365,13 @@ document.getElementById("support").addEventListener("click", function() {
     // Navigate to the "history.html" page
     window.location.href = "/support";
 });
+
+
+
+//faq qystion answare
+document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                faqItem.classList.toggle('open');
+            });
+        });
