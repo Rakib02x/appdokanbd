@@ -1,23 +1,22 @@
 // Import Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
-    import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js";
+import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-database.js";
 
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "app-dokan.firebaseapp.com",
-        databaseURL: "https://app-dokan-default-rtdb.firebaseio.com",
-        projectId: "app-dokan",
-        storageBucket: "app-dokan.appspot.com",
-        messagingSenderId: "388747703289",
-        appId: "1:388747703289:web:162085a1c25790bd954328",
-    };
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "app-dokan.firebaseapp.com",
+    databaseURL: "https://app-dokan-default-rtdb.firebaseio.com",
+    projectId: "app-dokan",
+    storageBucket: "app-dokan.appspot.com",
+    messagingSenderId: "388747703289",
+    appId: "1:388747703289:web:162085a1c25790bd954328",
+};
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const database = getDatabase(app);
-    
-    
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 const sliderContainer = document.getElementById('sliderContainer');
 let prevBtn, nextBtn; // Declare buttons
 let cards = [];
@@ -30,7 +29,9 @@ async function fetchImages() {
         const snapshot = await get(child(dbRef, "review"));
         if (snapshot.exists()) {
             const imageURLs = Object.values(snapshot.val());
-            createCards(imageURLs);
+
+            // Reverse the image URLs array before passing to createCards
+            createCards(imageURLs.reverse());
         } else {
             console.log("No images available.");
         }
